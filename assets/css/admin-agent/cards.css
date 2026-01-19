@@ -1,0 +1,107 @@
+/* Cards & selector components */
+
+.apai-agent-action-card{
+  width: 100%;
+  max-width: 100%;
+  margin: 14px 0;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e6e7ea;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  padding: 12px;
+}
+
+.apai-agent-action-title{
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #111827;
+}
+
+.apai-agent-action-summary{
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.apai-agent-action-buttons{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* WP buttons inside cards */
+.apai-agent-action-card .button,
+.apai-agent-action-card button{
+  border-radius: 14px;
+  padding: 8px 12px;
+  height: auto;
+}
+
+/* Product preview */
+.apai-action-product{
+  display:flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid #eef2f7;
+  background: #f9fafb;
+  margin: 8px 0 10px;
+}
+
+.apai-action-thumb{
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #e5e7eb;
+  background-size: cover;
+  background-position: center;
+  flex: 0 0 48px;
+}
+
+.apai-action-thumb.has-img{ background-color: transparent; }
+
+.apai-action-meta{
+  display:flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.apai-action-name{
+  font-weight: 650;
+  font-size: 13px;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 520px;
+}
+
+.apai-action-sub{
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.apai-action-cats{
+  display:flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.apai-chip{
+  display:inline-flex;
+  align-items:center;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+

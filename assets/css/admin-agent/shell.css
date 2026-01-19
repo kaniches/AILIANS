@@ -1,0 +1,370 @@
+:root{
+  --apai-shell-bg:#f3f6fb;
+  --apai-shell-border:#e6e8eb;
+  --apai-shell-muted:#6b7280;
+  --apai-shell-text:#111827;
+  --apai-shell-side:#f7f8fa;
+  --apai-shell-hover:#eef2f7;
+}
+
+/* Fullscreen admin experience (hide WP chrome) */
+body.apai-shell-active #wpadminbar,
+body.apai-shell-active #adminmenumain,
+body.apai-shell-active #wpfooter,
+body.apai-shell-active #screen-meta{
+  display:none !important;
+}
+body.apai-shell-active #wpcontent,
+body.apai-shell-active #wpbody-content{
+  margin-left:0 !important;
+  padding:0 !important;
+}
+body.apai-shell-active .wrap{
+  margin:0 !important;
+}
+
+/* Hide the default admin page header inside the chat page */
+body.apai-shell-active .apai-agent-header{
+  display:none !important;
+}
+
+.apai-shell{
+  position:fixed;
+  inset:0;
+  display:flex;
+  background:var(--apai-shell-bg);
+  color:var(--apai-shell-text);
+  z-index:9999;
+  /* Prefer the browser scrollbar (right edge) instead of inner scroll panes */
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+.apai-side{
+  width:280px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  align-self: flex-start;
+  background:var(--apai-shell-side);
+  border-right:1px solid var(--apai-shell-border);
+  display:flex;
+  flex-direction:column;
+  transition:width .18s ease;
+  overflow:hidden;
+}
+
+.apai-side-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 12px;
+}
+
+.apai-side-toggle{
+  width:40px;
+  height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--apai-shell-border);
+  background:#fff;
+  border-radius:12px;
+  cursor:pointer;
+}
+.apai-side-toggle:hover{ background:var(--apai-shell-hover); }
+
+.apai-brand{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.apai-brand-title{
+  font-weight:600;
+  font-size:14px;
+  line-height:1.1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.apai-brand-sub{
+  font-size:12px;
+  color:var(--apai-shell-muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.apai-nav{
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.apai-nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  color:inherit;
+  text-decoration:none;
+}
+.apai-nav-item:hover{ background:var(--apai-shell-hover); }
+.apai-nav-text{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.apai-side-bottom{
+  margin-top:auto;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-top:1px solid var(--apai-shell-border);
+  color:var(--apai-shell-muted);
+}
+
+.apai-main{
+  flex:1;
+  display:flex;
+  min-width:0;
+  background:var(--apai-shell-bg);
+  position: relative;
+}
+
+/* When collapsed: icon rail like Gemini */
+.apai-shell.apai-shell--collapsed .apai-side{ width:72px; }
+.apai-shell.apai-shell--collapsed .apai-brand,
+.apai-shell.apai-shell--collapsed .apai-nav-text{ display:none; }
+.apai-shell.apai-shell--collapsed .apai-nav-item{ justify-content:center; }
+.apai-shell.apai-shell--collapsed .apai-side-bottom{ justify-content:center; }
+
+/* Visual centering: when the left rail is collapsed, add an equal right
+   gutter so the chat feels centered like Gemini (sidebar doesn't push the
+   centerline). */
+.apai-shell.apai-shell--collapsed .apai-main{
+  padding-right: calc(clamp(18px, 5vw, 96px) + 72px);
+}
+
+
+/* Click-only menu (no hover expand) */
+/* Main gutters (Gemini-like centered content) */
+.apai-main{
+  flex:1;
+  display:flex;
+  min-width:0;
+  background:var(--apai-shell-bg);
+  justify-content:center;
+  padding: 20px clamp(18px, 5vw, 96px);
+}
+
+/* Keep icons/text consistent */
+.apai-side .dashicons{ color: var(--apai-shell-text); }
+
+/* Top wordmark (Gemini-like) */
+.apai-main-wordmark{
+  position: absolute;
+  top: 18px;
+  left: 26px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #111827;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+/* Chat layout: flat (no frame). Use high specificity to beat #apai_agent_chat rules. */
+#apai_shell #apai_agent_chat.apai-agent-chat{
+  width: min(1040px, 100%);
+  height: auto;
+  min-height: 100%;
+  max-width: none;
+  margin: 0 auto;
+  background: transparent;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Messages area: airy like Gemini */
+#apai_shell #apai_agent_chat .apai-agent-messages{
+  background: transparent !important;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  /* Bottom padding so the fixed composer never covers the last card */
+  padding: 28px 18px 260px;
+}
+
+/* Assistant messages: less "card", more text */
+#apai_shell .apai-agent-assistant .apai-agent-bubble{
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* User bubble: subtle pill */
+#apai_shell .apai-agent-user .apai-agent-bubble{
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+/* Composer: pill card centered */
+#apai_shell #apai_agent_chat .apai-agent-bottom{
+  background: transparent !important;
+  border-top: none !important;
+  position: sticky;
+  bottom: 0;
+  padding: 0 0 18px;
+}
+
+/* Composer wrapper: keep perfectly centered */
+#apai_shell #apai_agent_chat .apai-composer-card{
+  width: min(var(--apai-chat-max), 100%);
+  margin: 0 auto;
+}
+
+#apai_shell #apai_agent_chat .apai-agent-inputbar{
+  width: 100%;
+  margin: 0;
+  padding: 12px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(17,24,39,.08);
+}
+
+/* Plus button: render a perfectly centered "+" using pseudo-elements (no font-baseline drift) */
+#apai_shell #apai_agent_chat .apai-btn-plus{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  font-size: 0; /* avoid glyph baseline offsets */
+  color: transparent;
+}
+
+/* Non-bubble UI cards (action proposals, product pickers, etc.) should be aligned
+   with the same centered column as the conversation */
+/* F5r20: cards match chat column width */
+#apai_shell .apai-agent-action-card,
+#apai_shell .apai-agent-target-card,
+#apai_shell .apai-agent-picker,
+#apai_shell .apai-agent-card:not(.apai-composer-card){
+  width: min(var(--apai-chat-max), 100%);
+  max-width: none;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#apai_shell #apai_agent_chat .apai-btn-plus::before,
+#apai_shell #apai_agent_chat .apai-btn-plus::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #111827;
+  border-radius: 2px;
+}
+
+#apai_shell #apai_agent_chat .apai-btn-plus::before{
+  width: 14px;
+  height: 2px;
+}
+
+#apai_shell #apai_agent_chat .apai-btn-plus::after{
+  width: 2px;
+  height: 14px;
+}
+
+#apai_shell #apai_agent_input{
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 10px;
+  background: transparent !important;
+}
+
+#apai_shell #apai_agent_input:focus{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#apai_shell #apai_agent_send{ border-radius: 999px; }
+
+#apai_shell #apai_agent_chat .apai-agent-footerbar{
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 0 4px 0;
+  background: transparent !important;
+}
+
+/* Empty state: center composer like Gemini */
+.apai-shell.apai-shell--empty #apai_agent_messages{ display:none; }
+.apai-shell.apai-shell--empty #apai_agent_chat .apai-agent-bottom{
+  margin:auto;
+  width: 100%;
+  padding-bottom: 60px;
+}
+.apai-shell.apai-shell--empty #apai_agent_chat .apai-agent-footerbar{
+  justify-content:center;
+}
+
+
+/* === F5r14 micro-alignments (Gemini polish) === */
+/* Ensure equal gutters left/right inside main (prevents slight visual drift) */
+.apai-shell .apai-main{
+  padding-inline: clamp(24px, 6vw, 120px);
+  box-sizing: border-box;
+}
+
+/* Plus button: optical centering */
+#apai_shell #apai_agent_chat .apai-btn-plus{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(-3px);
+}
+
+/* Keep composer card perfectly centered and consistent width */
+#apai_shell #apai_agent_chat .apai-composer-card{
+  width: min(880px, calc(100% - 0px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* F5r16: composer overflow / inner chrome */
+#apai_shell #apai_agent_chat .apai-composer-card{
+  overflow: hidden; /* prevents any inner edges/shadows from bleeding out */
+}
+
+#apai_shell #apai_agent_chat .apai-agent-inputbar{
+  box-sizing: border-box;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* F5r17: keep action/proposal/picker cards aligned with the conversation */
+#apai_shell .apai-agent-action-card,
+#apai_shell .apai-agent-target-card,
+#apai_shell .apai-agent-picker,
+#apai_shell .apai-agent-card:not(.apai-composer-card){
+  margin-left: auto;
+  margin-right: auto;
+  width: min(var(--apai-chat-max), 100%);
+  box-sizing: border-box;
+}
+
+/* Remove inner scrolling panes so the browser scrollbar is used */
+#apai_shell .apai-agent-messages{
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+}

@@ -1,0 +1,62 @@
+/* + Menu (ChatGPT-like) — UI only */
+
+.apai-plus-menu {
+    position: fixed;
+    z-index: 100000; /* above WP admin */
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 12px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    padding: 6px;
+    display: none;
+}
+
+.apai-plus-menu[data-open="1"]{
+    display: block;
+}
+
+.apai-plus-menu .apai-plus-menu-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: #111;
+    font-size: 13px;
+}
+
+.apai-plus-menu .apai-plus-menu-item:hover{
+    background: rgba(0,0,0,0.06);
+}
+
+.apai-plus-menu .apai-plus-menu-icon{
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.06);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.apai-plus-menu .apai-plus-menu-label{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.apai-plus-menu .apai-plus-menu-title{
+    font-weight: 600;
+}
+
+.apai-plus-menu .apai-plus-menu-sub{
+    font-size: 12px;
+    color: rgba(0,0,0,0.60);
+}
